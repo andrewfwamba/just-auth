@@ -19,7 +19,7 @@ const Signup = () => {
      useEffect(()=>{
         const unsubscribe = auth.onAuthStateChanged(user => {
             if(user) {
-                navigation.navigate('Home')
+                navigation.replace('Home')
             }
         })
         return unsubscribe;
@@ -36,7 +36,7 @@ const Signup = () => {
         const user = userCredential.user;
         console.log('Registered with:',user.email);
 
-        if(userCredential.user.email){
+        if(user.email){
              addDoc(usersCollection, {
                 email: email,
                 name: name,

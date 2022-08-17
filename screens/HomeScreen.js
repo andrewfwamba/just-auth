@@ -1,9 +1,9 @@
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { auth, db, firebase } from '../firebase'
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
-import { collection,  doc,  getDoc,  getDocs, getFirestore, query, where } from 'firebase/firestore';
+import { collection,  collectionGroup,  doc,  documentId,  DocumentReference,  getDoc,  getDocs, getFirestore, query, where } from 'firebase/firestore';
 
 
 
@@ -21,6 +21,8 @@ import { collection,  doc,  getDoc,  getDocs, getFirestore, query, where } from 
 
 const HomeScreen = () => {
     const user = auth.currentUser;
+    const [myUser, setMyUser] = useState('');
+    
     // const userRef = collection(db, "users");
     // const q = query(userRef, where(user?.email, "==", true));
 
@@ -59,7 +61,26 @@ const HomeScreen = () => {
     console.log(error);
 
 });
+
+
     };
+let email = auth.currentUser?.email;
+    const getUser = () => {
+        const getuse = query(collection(db, "users"), where("email", "==", email));
+
+        getDocs(getuse).then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                setMyUser((doc.id,"=>",doc.data()))
+                console.warn(myUser);
+                
+            });
+        })
+            .catch(function (error) {
+                seterror("Error getting documents: ", error);
+            });
+    } 
+    
 
     
         // query(collection(db, "users"),
@@ -113,13 +134,19 @@ const HomeScreen = () => {
         </View>
         <Text style={{color: 'white', fontSize: 20, fontWeight: '800', margin: 30}}>Your email is displayed below</Text>
       <Text style={{color: '#ccc', fontWeight: '300', fontSize: 20, marginBottom: 10}}>Email: {user?.email}</Text>
-      <Text style={{color: '#ccc', fontWeight: '300', fontSize: 20, marginBottom: 10}}>Name: {user.name}</Text>
+      <Text style={{color: '#ccc', fontWeight: '300', fontSize: 20, marginBottom: 10}}>Name: {doc.data}</Text>
 
 
-      <TouchableOpacity style={styles.button}
+      {/* <TouchableOpacity style={styles.button}
       onPress={handleSignout}
       activeOpacity={0.5}>
         <Text style={styles.buttonText}>Sign out</Text>
+      </TouchableOpacity> */}
+
+      <TouchableOpacity style={styles.button}
+      onPress={getUser}
+      activeOpacity={0.5}>
+        <Text style={styles.buttonText}>Init</Text>
       </TouchableOpacity>
 
      
