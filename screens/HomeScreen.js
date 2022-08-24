@@ -1,9 +1,15 @@
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { auth, db, firebase } from '../firebase'
+import { auth, db} from '../firebase'
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
-import { collection, collectionGroup, DocumentReference, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+
+var height = Dimensions.get('window').height;
+var width = Dimensions.get('window').width;
+
+console.log(height, width);
+
 
 
 
@@ -74,16 +80,11 @@ const HomeScreen = () => {
 
 
                 <TouchableOpacity style={styles.button}
-      onPress={handleSignout}
-      activeOpacity={0.5}>
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button1}
-                    onPress={getUser}
-                    activeOpacity={0.7}>
-                    <Text style={styles.buttonText}>Init</Text>
+                    onPress={handleSignout}
+                    activeOpacity={0.5}>
+                    <Text style={styles.buttonText}>Sign out</Text>
                 </TouchableOpacity>
+
 
 
             </View>
