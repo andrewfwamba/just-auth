@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/core';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {db, auth } from '../firebase';
-import { collection, getDocs, query, where, addDoc } from 'firebase/firestore';
+import { collection,addDoc } from 'firebase/firestore';
 
 const usersCollection = collection(db, "users");
 
@@ -19,7 +19,7 @@ const Signup = () => {
      useEffect(()=>{
         const unsubscribe = auth.onAuthStateChanged(user => {
             if(user) {
-                navigation.replace('Home')
+                navigation.replace('Hometabs')
             }
         })
         return unsubscribe;

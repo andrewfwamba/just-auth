@@ -1,7 +1,7 @@
 import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/core';
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
     useEffect(()=>{
         const unsubscribe = auth.onAuthStateChanged(user => {
             if(user) {
-                navigation.replace('Home')
+                navigation.replace('Hometabs')
             }
         })
         return unsubscribe;
